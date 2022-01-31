@@ -1,0 +1,46 @@
+{
+  // Verwendet IntelliSense zum Ermitteln möglicher Attribute.
+  // Zeigen Sie auf vorhandene Attribute, um die zugehörigen Beschreibungen anzuzeigen.
+  // Weitere Informationen finden Sie unter https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+
+    {
+      "name": "Python: Aktuelle Datei",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal"
+    },
+
+    {
+      "name": "AV Gate",
+      "type": "python",
+      "request": "launch",
+      "module": "flask",
+      "env": { "FLASK_APP": "av_gate.py", "FLASK_ENV": "development" },
+      "args": ["run", "--no-debugger", "--port", "5001"],
+      "jinja": true
+    },
+    {
+      "name": "AV Proxy",
+      "type": "python",
+      "request": "launch",
+      "program": "av_proxy.py",
+      "console": "integratedTerminal"
+    },
+
+    {
+      "name": "Mockserver",
+      "type": "python",
+      "request": "launch",
+      "module": "flask",
+      "env": {
+        "FLASK_APP": "mockserver/mockserver.py",
+        "FLASK_ENV": "development"
+      },
+      "args": ["run", "--no-debugger"],
+      "jinja": true
+    }
+  ]
+}

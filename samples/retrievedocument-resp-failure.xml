@@ -1,0 +1,20 @@
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope">
+    <soap:Header>
+        <Action xmlns="http://www.w3.org/2005/08/addressing">urn:ihe:iti:2007:RetrieveDocumentSetResponse</Action>
+        <MessageID xmlns="http://www.w3.org/2005/08/addressing">urn:uuid:c07dbc27-444b-4d53-bcad-69dd8bc99742</MessageID>
+        <To xmlns="http://www.w3.org/2005/08/addressing">http://www.w3.org/2005/08/addressing/anonymous</To>
+        <RelatesTo xmlns="http://www.w3.org/2005/08/addressing">ec50fa1f-ff62-49d3-a870-f5218afba633</RelatesTo>
+    </soap:Header>
+    <soap:Body>
+        <ns5:RetrieveDocumentSetResponse xmlns="http://ws.gematik.de/conn/ConnectorCommon/v5.0" xmlns:ns2="http://ws.gematik.de/conn/ConnectorContext/v2.0" xmlns:ns3="http://ws.gematik.de/fa/phr/v1.1" xmlns:ns4="http://ws.gematik.de/conn/phrs/PHRService/v1.3" xmlns:ns5="urn:ihe:iti:xds-b:2007" xmlns:ns6="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:ns7="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" xmlns:ns8="urn:oasis:names:tc:ebxml-regrep:xsd:cms:3.0" xmlns:ns9="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:ns10="urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0" xmlns:ns11="http://ws.gematik.de/fa/vsdm/vsd/v5.2" xmlns:ns12="http://www.w3.org/2000/09/xmldsig#" xmlns:ns13="urn:oasis:names:tc:dss:1.0:core:schema" xmlns:ns14="http://ws.gematik.de/tel/error/v2.0" xmlns:ns15="http://www.w3.org/2006/05/addressing/wsdl" xmlns:ns16="urn:oasis:names:tc:SAML:1.0:assertion" xmlns:ns17="urn:hl7-org:v3" xmlns:ns18="urn:ihe:iti:rmd:2017">
+            <ns7:RegistryResponse status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Failure">
+                <ns7:RegistryErrorList>
+                    <ns7:RegistryError codeContext="Could not find document for uniqueId '2.25.159146971858510204770x'." errorCode="XDSDocumentUniqueIdError" severity="urn:oasis:names:tc:ebxml-regrep:ErrorSeverityType:Error">Could not find document for uniqueId '2.25.159146971858510204770x'.</ns7:RegistryError>
+                    <ns7:RegistryError codeContext="Could not find document for uniqueId '2.25.234564263447938062697x'." errorCode="XDSDocumentUniqueIdError" severity="urn:oasis:names:tc:ebxml-regrep:ErrorSeverityType:Error">Could not find document for uniqueId '2.25.234564263447938062697x'.</ns7:RegistryError>
+                    <ns7:RegistryError codeContext="Could not find document for uniqueId '2.25.267792980016692345363x'." errorCode="XDSDocumentUniqueIdError" severity="urn:oasis:names:tc:ebxml-regrep:ErrorSeverityType:Error">Could not find document for uniqueId '2.25.267792980016692345363x'.</ns7:RegistryError>
+                    <ns7:RegistryError errorCode="XDSRegistryMetadataError" severity="urn:oasis:names:tc:ebxml-regrep:ErrorSeverityType:Error">No documents found for unique ids in request</ns7:RegistryError>
+                </ns7:RegistryErrorList>
+            </ns7:RegistryResponse>
+        </ns5:RetrieveDocumentSetResponse>
+    </soap:Body>
+</soap:Envelope>
