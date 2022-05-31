@@ -1,8 +1,8 @@
 #! /bin/bash
-curl -v \
---insecure \
--X POST http://127.0.0.1:8400/soap-api/PHRService/1.3.0 \
+curl -v --location --request POST 'http://127.0.0.1:5001/soap-api/PHRService/1.3.0' \
 --header 'Content-Type: application/xml' \
+--header 'X-real-ip: 127.0.0.1:84001' \
+--insecure \
 --data-raw '<?xml version="1.0" encoding="UTF-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soap="http://www.w3.org/2003/05/soap-envelope" xmlns:m0="http://ws.gematik.de/conn/ConnectorContext/v2.0" xmlns:m1="http://ws.gematik.de/conn/ConnectorCommon/v5.0" xmlns:m2="http://ws.gematik.de/fa/phr/v1.1">
   <soap:Header>
@@ -13,7 +13,7 @@ curl -v \
         <m1:WorkplaceId>CATS</m1:WorkplaceId>
       </m0:Context>
       <m:RecordIdentifier>
-        <m2:InsurantId root="1.2.276.0.76.4.8" extension="X110404542"/>
+        <m2:InsurantId root="1.2.276.0.76.4.8" extension="X110403007"/>
         <m2:HomeCommunityId>urn:oid:1.2.276.0.76.3.1.91.1</m2:HomeCommunityId>
       </m:RecordIdentifier>
     </m:ContextHeader>
@@ -45,4 +45,4 @@ curl -v \
   </soap:Body>
 </soap:Envelope>
 ' \
---output - | less
+#--output - | less

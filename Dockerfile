@@ -5,27 +5,26 @@ FROM ubuntu:latest
 ENV TZ=Europe/Berlin
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN mkdir -p /app/cert
+RUN apt-get -y update \
+&& apt-get -y install nginx uwsgi uwsgi-plugin-python3 python3 python3-pip clamav clamav-daemon 
 
-COPY av_gate.py av_gate.ini requirements.txt /app
-COPY cert/* /app/cert
+# remove config for group on socket clamd    
+RUN sed -i '/^LocalSocketGroup .*$/d' /etc/clamav/clamd.conf
+
+COPY cert/* /app/cert/
+COPY replacements/* /app/replacements/
+COPY docker/startup.sh /bin/
 COPY docker/nginx.conf /etc/nginx/conf.d/av_gate.conf
 COPY docker/uwsgi.ini /etc/uwsgi/apps-enabled/av_gate.ini
+# copy initial clamav signatures to avoid cooldown
+COPY docker/clamav/* /var/lib/clamav
 
-RUN apt update && apt install -y \
-    nginx uwsgi uwsgi-plugin-python3 python3 python3-pip clamav clamav-daemon 
-    
+COPY av_gate.py requirements.txt /app/
+COPY docker/av_gate.ini /app/
 RUN pip3 install -r /app/requirements.txt
 
-# starting services
-# uncommon for docker, but this is for demonstration
-# RUN service uwsgi start
-# RUN service nginx start
-RUN service clamav-daemon start
-
-# init clamav database 
-RUN freshclam
+ENTRYPOINT "/bin/startup.sh"
 
 # expose not possible for ranges
-expose 8400
-expose 8401
+EXPOSE 8400
+EXPOSE 8401

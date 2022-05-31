@@ -28,17 +28,17 @@ curl -v --location --request POST 'https://127.0.0.1:8401/soap-api/PHRService/1.
       <DocumentRequest xmlns="urn:ihe:iti:xds-b:2007">
         <HomeCommunityId>urn:oid:1.2.276.0.76.3.1.91.1</HomeCommunityId>
         <RepositoryUniqueId>1.2.276.0.76.3.1.91.1</RepositoryUniqueId>
-        <DocumentUniqueId>2.25.159146971858510204770</DocumentUniqueId>
+        <DocumentUniqueId>2.25.123657184201295845861</DocumentUniqueId>
       </DocumentRequest>
       <DocumentRequest xmlns="urn:ihe:iti:xds-b:2007">
         <HomeCommunityId>urn:oid:1.2.276.0.76.3.1.91.1</HomeCommunityId>
         <RepositoryUniqueId>1.2.276.0.76.3.1.91.1</RepositoryUniqueId>
-        <DocumentUniqueId>2.25.234564263447938062697</DocumentUniqueId>
+        <DocumentUniqueId>2.25.271901047428199838029</DocumentUniqueId>
       </DocumentRequest>
       <DocumentRequest xmlns="urn:ihe:iti:xds-b:2007">
         <HomeCommunityId>urn:oid:1.2.276.0.76.3.1.91.1</HomeCommunityId>
         <RepositoryUniqueId>1.2.276.0.76.3.1.91.1</RepositoryUniqueId>
-        <DocumentUniqueId>2.25.267792980016692345363</DocumentUniqueId>
+        <DocumentUniqueId>2.25.234677361812986750726</DocumentUniqueId>
       </DocumentRequest>
     </RetrieveDocumentSetRequest>
   </soap:Body>

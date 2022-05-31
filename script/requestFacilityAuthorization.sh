@@ -24,7 +24,7 @@ curl --location --request POST 'https://kon-instanz1.titus.ti-dienste.de/soap-ap
         <m:Vers_Docs>true</m:Vers_Docs>
         <m:LE_Docs>true</m:LE_Docs>
         <m:KTR_Docs>true</m:KTR_Docs>
-        <m:ExpirationDate>2021-12-31</m:ExpirationDate>
+        <m:ExpirationDate>2022-12-31</m:ExpirationDate>
       </m:AuthorizationConfiguration>
       <m:RecordIdentifier>
         <m2:InsurantId root="1.2.276.0.76.4.8" extension="X110403007"/>
