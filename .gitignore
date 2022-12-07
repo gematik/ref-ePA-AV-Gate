@@ -7,4 +7,6 @@ cert
 .DS_Store
 .dmypy.json
 docker/clamav
+testfiles
+samples
 publish.jenkinsfile

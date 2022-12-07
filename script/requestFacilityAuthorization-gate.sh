@@ -1,5 +1,5 @@
 #! /bin/bash
-curl --location --request POST 'https://kon-instanz1.titus.gematik.solutions/soap-api/PHRManagementService/1.3.0' \
+curl --location --request POST 'https://127.0.0.1:8401/soap-api/PHRManagementService/1.3.0' \
 --header 'Content-Type: application/xml' \
 --insecure --cert-type P12 --cert ./cert/ps_epa_consol_01.p12:00 \
 --data-raw '<?xml version="1.0" encoding="UTF-8"?>
@@ -38,4 +38,4 @@ curl --location --request POST 'https://kon-instanz1.titus.gematik.solutions/soa
     </m:RequestFacilityAuthorization>
   </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>' \
-| xmllint --format -
+# | xmllint --format -
