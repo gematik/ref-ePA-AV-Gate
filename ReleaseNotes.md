@@ -1,3 +1,8 @@
+# Release 1.5.0
+- added testresult for iMedOne KIS (informative)
+
+- adapted to multiple interface versions in connector.sds file
+
 # Release 1.4.0
 - Version 1.4.0
 - successfully testet with two major KIS

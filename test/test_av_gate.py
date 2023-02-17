@@ -40,8 +40,10 @@ def client(monkeypatch):
 
                 def __init__(self, **kwargs):
                     self.__dict__.update(kwargs)
+
                 def __enter__(self):
                     return self
+
                 def __exit__(self, exc_type, exc_val, exc_tb):
                     pass
 
@@ -149,16 +151,36 @@ def test_connector_sds(client):
     )
     xml = ET.fromstring(res.data)
 
-    data = {
-        e.attrib["Name"]: e.find("**/{*}EndpointTLS").attrib["Location"]
-        for e in xml.findall("{*}ServiceInformation/{*}Service")
-    }
     assert (
-        data["PHRManagementService"]
+        xml.find(
+            "{*}ServiceInformation/{*}Service[@Name='PHRManagementService']/{*}Versions/{*}Version[@Version='1.3.0']/{*}EndpointTLS"
+        ).attrib["Location"]
         == "https://kon-instanz1.titus.ti-dienste.de:443/soap-api/PHRManagementService/1.3.0"
     )
-    assert data["PHRService"] == "https://7.7.7.7:400/soap-api/PHRService/1.3.0"
-    assert data["PHRManagementService"] == "https://kon-instanz1.titus.ti-dienste.de:443/soap-api/PHRManagementService/1.3.0"
+    assert (
+        xml.find(
+            "{*}ServiceInformation/{*}Service[@Name='PHRManagementService']/{*}Versions/{*}Version[@Version='2.0']/{*}EndpointTLS"
+        ).attrib["Location"]
+        == "https://kon-instanz1.titus.ti-dienste.de:443/soap-api/PHRManagementService/2.0"
+    )
+    assert (
+        xml.find(
+            "{*}ServiceInformation/{*}Service[@Name='PHRService']/{*}Versions/{*}Version[@Version='1.3.0']/{*}EndpointTLS"
+        ).attrib["Location"]
+        == "https://7.7.7.7:400/soap-api/PHRService/1.3.0"
+    )
+    assert (
+        xml.find(
+            "{*}ServiceInformation/{*}Service[@Name='PHRService']/{*}Versions/{*}Version[@Version='2.0']/{*}EndpointTLS"
+        ).attrib["Location"]
+        == "https://7.7.7.7:400/soap-api/PHRService/2.0"
+    )
+    assert (
+        xml.find(
+            "{*}ServiceInformation/{*}Service[@Name='PHRManagementService']/{*}Versions/{*}Version[@Version='1.3.0']/{*}EndpointTLS"
+        ).attrib["Location"]
+        == "https://kon-instanz1.titus.ti-dienste.de:443/soap-api/PHRManagementService/1.3.0"
+    )
 
 
 def test_proxy_all_service(client):
@@ -168,16 +190,14 @@ def test_proxy_all_service(client):
         "/connector.sds", headers={"X-real-ip": "8.8.8.8", "Host": "7.7.7.7:401"}
     )
     xml = ET.fromstring(res.data)
-    data = {
-        e.attrib["Name"]: e.find("**/{*}EndpointTLS").attrib["Location"]
-        for e in xml.findall("{*}ServiceInformation/{*}Service")
-    }
-    assert any(
-        [
-            x.startswith("https://7.7.7.7:401/soap-api/")
-            for x in data.values()
-        ]
+    data = (
+        e.attrib["Location"]
+        for e in xml.findall(
+            "{*}ServiceInformation/{*}Service/{*}Versions/{*}Version/{*}EndpointTLS"
+        )
     )
+
+    assert any([x.startswith("https://7.7.7.7:401/soap-api/") for x in data])
 
 
 def test_clam_av(client, clamav):

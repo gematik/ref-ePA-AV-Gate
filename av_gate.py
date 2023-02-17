@@ -21,7 +21,7 @@ import urllib3
 from flask import Flask, Response, abort, request, stream_with_context
 from email.parser import BytesParser
 
-__version__ = "1.4"
+__version__ = "1.5"
 
 ALL_METHODS = [
     "GET",
@@ -79,18 +79,24 @@ def connector_sds():
         if client_config.getboolean("proxy_all_services", False):
             for e in xml.findall("{*}ServiceInformation/{*}Service//{*}EndpointTLS"):
                 previous_url = urlparse(e.attrib["Location"])
-                e.attrib["Location"] = f"{previous_url.scheme}://{request.host}{previous_url.path}"
+                e.attrib[
+                    "Location"
+                ] = f"{previous_url.scheme}://{request.host}{previous_url.path}"
 
-        e = xml.find("{*}ServiceInformation/{*}Service[@Name='PHRService']//{*}EndpointTLS")
-        if e is None:
+        for e in xml.findall(
+            "{*}ServiceInformation/{*}Service[@Name='PHRService']//{*}EndpointTLS"
+        ):
+            previous_url = urlparse(e.attrib["Location"])
+            e.attrib[
+                "Location"
+            ] = f"{previous_url.scheme}://{request.host}{previous_url.path}"
+            global phr_service_path
+            phr_service_path = previous_url.path
+        else:
             KeyError("connector.sds does not contain PHRService location.")
 
-        previous_url = urlparse(e.attrib["Location"])
-        e.attrib["Location"] = f"{previous_url.scheme}://{request.host}{previous_url.path}"
-        global phr_service_path
-        phr_service_path = previous_url.path
-
         return create_response(ET.tostring(xml), upstream)
+
 
 @app.route("/<path:path>", methods=ALL_METHODS)
 def switch(path):
@@ -119,14 +125,17 @@ def phr_service(path):
 
         return response
 
+
 def other(path):
     """Streamed forward without scan"""
     client_config = get_client_config()
     upstream = request_upstream(client_config, stream=True)
+
     def generate():
         for data in upstream.iter_content():
             yield data
         upstream.close()
+
     response = create_response(generate, upstream)
     return response
 
@@ -158,7 +167,7 @@ def request_upstream(client_config, warn=True, stream=False):
             data=data,
             cert=cert,
             verify=verify,
-            stream=stream
+            stream=stream,
         )
 
         if warn and not stream and bytes(konn, "ascii") in response.content:
@@ -189,6 +198,7 @@ def get_client_config():
             abort(500)
         else:
             return config[fallback]
+
 
 def create_response(data, upstream: Response) -> Response:
     """Create new response with copying headers from origin response"""
@@ -339,9 +349,13 @@ def get_malicious_content_ids(msg):
         content_id = extract_id(att["Content-ID"])
 
         test_malicous = False
-        if ALL_PNG_MALICIOUS and att.get_content().startswith(bytearray.fromhex('89504E470D0A1A0A')):
+        if ALL_PNG_MALICIOUS and att.get_content().startswith(
+            bytearray.fromhex("89504E470D0A1A0A")
+        ):
             test_malicous = True
-        if ALL_PDF_MALICIOUS and att.get_content().startswith(bytearray.fromhex('25504446')):
+        if ALL_PDF_MALICIOUS and att.get_content().startswith(
+            bytearray.fromhex("25504446")
+        ):
             test_malicous = True
 
         if scan_res[0] != "OK" or test_malicous:
