@@ -9,4 +9,5 @@ cert
 docker/clamav
 testfiles
 samples
-publish.jenkinsfile
+jenkinsfiles
+
