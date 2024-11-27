@@ -1,6 +1,8 @@
+# Release 1.5.0-1
+- added disclaimer about supported ePA versions
+
 # Release 1.5.0
 - added testresult for iMedOne KIS (informative)
-
 - adapted to multiple interface versions in connector.sds file
 
 # Release 1.4.0
